@@ -16,38 +16,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+ 
 
 export default function SortingCard()
 {
   
-  const { board, setboard } = useContext(BoardContext);
+  const { SortingBoard, board } = useContext(BoardContext);
 
   const classes = useStyles();
   const [sorting, setsorting] = useState({
     sortby: '',
-    name: 'Default'
+    name: board.sorting || 'Default'
   });
+
+  useEffect(() => {
+    setsorting({...sorting, name: board.sorting})
+  }, [board.sorting])
   
   useEffect(() => {
-      console.log(board);
-      switch (sorting.name) {
-        case 'Default':
-          setboard({...board, cards: board.cards.map(c => ({...c, tasks : c.tasks.sort((a, b) => new Date(a.created) - new Date(b.created))})) });
-
-          break;
-      
-        case 'Date':
-          setboard({...board, cards: board.cards.map(c => ({...c, tasks : c.tasks.sort((a, b) => new Date(a.date) - new Date(b.date) )})) });
-          
-          break;  
-
-        case 'Priority':
-          setboard({...board, cards: board.cards.map(c => ({...c, tasks : c.tasks.sort((a, b) =>  a.priority -  b.priority )})) }); 
-          break;
-
-        default:
-          break;
-      }
+      SortingBoard(sorting.name);
   }, [sorting])
 
   const handleChange = (event) => {

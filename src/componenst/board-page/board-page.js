@@ -14,7 +14,7 @@ import ProgressMsg from '../../componenst/progress-msg';
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import TargetCard from '../card';
-import SortingCard from '../sorting-card'
+import SortingCard  from '../sorting-card'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -63,7 +63,7 @@ export default function BoardPage() {
     const classes = useStyles(); 
     const { id } = useParams();
    
-    const { boards, card, board, setboard } = useContext(BoardContext);
+    const { boards, card, board, setboard, SortingBoard } = useContext(BoardContext);
     const { user } = useContext(UserContext);
     const [isSave, setisSave] = useState(false);
     const [nameBoard, setnameBoard] = useState('')
@@ -88,6 +88,7 @@ export default function BoardPage() {
         console.log("SAAAAVEEEE");
         sendBoard(user.id, board, () => {
             setisSave(true);
+            
             setTimeout(() => setisSave(false), 1000);
         })
     }, [board])
