@@ -1,25 +1,67 @@
-import logo from './logo.svg';
 import './App.css';
 
+import ModalLogin from './componenst/modal-login'
+import Menu from './componenst/menu'
+import { useContext, useEffect, useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { TrobberContext } from './contexts/trobber-context'
+import {AlertContext} from './contexts/alert-context';
+import { UserContext } from './contexts/user-context';
+import HomePage from './componenst/home-page'
+import BoardPage from './componenst/board-page'
+import { BrowserRouter as Router, Route, Switch, Link, useParams } from 'react-router-dom';
+import ProgressMsg from './componenst/progress-msg';
+import {BoardContext} from './contexts/board-context'
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        backgroundColor: '#E0F2F1',
+        height: '100vh'
+    }
+}));
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const classes = useStyles();
+
+    const { trobber, isTrobber } = useContext(TrobberContext);
+    const { isAlert, getAlert } = useContext(AlertContext);
+    const { user, isLoginUser } = useContext(UserContext);
+    // const { task, card, board, setboard, updateId, setboards, boards } = useContext(BoardContext);
+
+    useEffect(() => {
+        
+    }, [])
+    return (
+        
+            <div className={classes.root}>
+    
+                {
+                    isTrobber ? trobber : isAlert ? getAlert() : isLoginUser ? 
+                        <>
+                            <ProgressMsg alert={ `Wellcome ${user.nick}`}/>
+                            <Router>
+                                <Menu />
+                            
+                                <Switch>
+                                    <Route exact path='/'>
+                                        <HomePage />
+                                    </Route>
+                                                                
+                                    <Route path='/boards/:id'>
+                                        <BoardPage />
+                                    </Route>
+                                </Switch>
+                            </Router> 
+                        </>    
+
+                    :   <ModalLogin/>
+
+                }
+
+            </div>
+        
+    );
 }
 
 export default App;
