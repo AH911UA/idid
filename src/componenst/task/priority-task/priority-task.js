@@ -32,7 +32,7 @@ export default function PriorityTask({color, id}) {
 
   const { board, setboard } = useContext(BoardContext);
   
-  const [onpriorityColor, setonpriorityColor] = useState(color || '#EEEEEE')
+  const [onpriorityColor, setonpriorityColor] = useState(color ? colors[color] : '#EEEEEE')
 
   const [anchorEl, setAnchorEl] = useState(null);
  
