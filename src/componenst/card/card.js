@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
     card:
     {
-        padding: '2rem',
+        padding: '0.5rem',
         display: 'flex',
         flexDirection: 'column',
         alignIntem: 'center',
@@ -53,7 +53,8 @@ function Card({ card, setisSave, onDrop })
     const onAddTask = () => {
     
         setboard({
-            ...board, cards: board.cards?.map(c => c.id === card.id ? { ...c, tasks: c.tasks ? [...c.tasks, { ...task, id: randId() }] : [{task, id: randId() }] } : c)
+            ...board, cards: board.cards?.map(c => 
+                c.id === card.id ? { ...c, tasks: c.tasks ? [...c.tasks, { ...task, id: randId() , created: new Date().toUTCString()}] : [{task, id: randId(), created: new Date().toUTCString() }] } : c)
         });
          
         sendBoard(user.id, board, () => {
@@ -123,22 +124,19 @@ export default function TargetCard(props)
 
     const handleDrop = useCallback((id) =>
     {
-        let tmpT = null;
-        board.cards.find(c => tmpT = c.tasks?.find(t => t.id === id));
-        console.log(tmpT);
-        console.log('before ', board);
-        let b = { ...board, cards: board.cards.map(c => ({ ...c, tasks: c.tasks ? c.tasks.filter(t => t.id !== id) : [] })) };
-        console.log('after ', b);
+        // let tmpT = null;
+        // board.cards.find(c => tmpT = c.tasks?.find(t => t.id === id));
+        // console.log(tmpT);
+        // console.log('before ', board);
+        // let b = { ...board, cards: board.cards.map(c => ({ ...c, tasks: c.tasks ? c.tasks.filter(t => t.id !== id) : [] })) };
+        // console.log('after ', b);
 
-        let thisTasks = card.tasks ? card.tasks.filter(t => t.id !== id) : undefined;
-        let thisCard = { ...card, tasks: thisTasks ? [...thisTasks, tmpT] : [tmpT] };
+        // let thisTasks = card.tasks ? card.tasks.filter(t => t.id !== id) : undefined;
+        // let thisCard = { ...card, tasks: thisTasks ? [...thisTasks, tmpT] : [tmpT] };
 
-        b = { ...b, cards: b.cards.map(c => c.id === card.id ? thisCard : c) };
-        console.log('finish ', b);
-        setboard(b);
-
-
-        console.log("syka  ---> ", id);
+        // b = { ...b, cards: b.cards.map(c => c.id === card.id ? thisCard : c) };
+        // console.log('finish ', b);
+        // setboard(b);
          
     }, []);
     return (<Card {...props}  onDrop={handleDrop}/>);

@@ -14,6 +14,8 @@ import ProgressMsg from '../../componenst/progress-msg';
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import TargetCard from '../card';
+import SortingCard from '../sorting-card'
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -118,7 +120,6 @@ export default function BoardPage() {
         //     setTimeout(() => setisSave(false), 2000);
         // });
     }
-    
 
     return (
 
@@ -139,6 +140,7 @@ export default function BoardPage() {
                             onBlur={handleBlur} 
                             variant="outlined"
                         />
+                        <SortingCard />
                     </div>
                     
                     <div className={classes.secondHeader}>

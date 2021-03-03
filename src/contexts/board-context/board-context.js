@@ -14,6 +14,8 @@ export default function BoardContextProvider({ children }) {
         exs: '', 
         description: '',
         date: null,
+        created: '',
+        priority: '',
         color: null, 
     }
 
