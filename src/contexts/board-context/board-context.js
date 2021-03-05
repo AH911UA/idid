@@ -29,6 +29,7 @@ export default function BoardContextProvider({ children }) {
         id: 0,
         sorting: 'Default',
         title: '',
+        back: '',
         cards: [],
     });
 

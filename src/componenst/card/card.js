@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 350,
         maxWidth: 350,
         '& > *': {
-                marginLeft: 10,
+                marginRight: 10,
                 padding: '5px'
             }
     },

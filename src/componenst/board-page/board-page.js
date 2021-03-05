@@ -7,14 +7,15 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import * as randId from 'generate-unique-id'
 import { useContext, useEffect, useState } from 'react';
-import {BoardContext} from '../../contexts/board-context' 
-import sendBoard  from '../../servises/sendBoard';
-import {UserContext} from '../../contexts/user-context';
+import { BoardContext } from '../../contexts/board-context'
+import sendBoard from '../../servises/sendBoard';
+import { UserContext } from '../../contexts/user-context';
 import ProgressMsg from '../../componenst/progress-msg';
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import TargetCard from '../card';
-import SortingCard  from '../sorting-card'
+import SortingCard from '../sorting-card';
+import Settings from './settings'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,13 +34,15 @@ const useStyles = makeStyles((theme) => ({
         {
             textDecoration: 'none'
         },
-        
+
     },
     settings: {
         width: '100%',
+        display: 'flex',
         borderBottom: '2px solid #B2DFDB',
         padding: '0.8rem 0 1rem',
-        marginTop: '0.2rem'
+        marginTop: '0.2rem',
+        justifyContent: 'space-between'
     },
     secondHeader:
     {
@@ -55,22 +58,22 @@ const useStyles = makeStyles((theme) => ({
         // overflow: 'scroll',
         boxSizing: 'border-box',
     },
-    
-}));
- 
 
-export default function BoardPage() {
-    const classes = useStyles(); 
+}));
+
+
+export default function BoardPage({setpage}) {
+    setpage(false)
+    const classes = useStyles();
     const { id } = useParams();
-   
+
     const { boards, card, board, setboard, SortingBoard } = useContext(BoardContext);
     const { user } = useContext(UserContext);
     const [isSave, setisSave] = useState(false);
     const [nameBoard, setnameBoard] = useState('')
 
     useEffect(() => {
-        if (id !== 'new-board')
-        {
+        if (id !== 'new-board') {
             for (const elem of boards) {
                 if (elem['idBoard'] === id) {
                     setboard(elem['board']);
@@ -79,7 +82,7 @@ export default function BoardPage() {
             }
         }
     }, [])
-    
+
     useEffect(() => {
 
         if (!board.title) {
@@ -88,12 +91,12 @@ export default function BoardPage() {
         console.log("SAAAAVEEEE");
         sendBoard(user.id, board, () => {
             setisSave(true);
-            
+
             setTimeout(() => setisSave(false), 1000);
         })
     }, [board])
 
-   
+
 
     const handleChange = ({ target: { value } }) => {
         setnameBoard(value);
@@ -114,8 +117,8 @@ export default function BoardPage() {
 
     const onAddCard = () => {
 
-        setboard({ ...board, cards: [...board?.cards, { ...card, id: randId()}] });
-         
+        setboard({ ...board, cards: [...board?.cards, { ...card, id: randId() }] });
+
         // sendBoard(user.id, board, () => {
         //     setisSave(!isSave);
         //     setTimeout(() => setisSave(false), 2000);
@@ -126,24 +129,33 @@ export default function BoardPage() {
 
         <>
             {
-                isSave ? <ProgressMsg alert='save'/> : ''
+                isSave ? <ProgressMsg alert='save' /> : ''
             }
-            <Container maxWidth="lg" fixed >
+            <Container fixed>
                 <Typography component="div"
                     className={classes.root}
+                    style={board.back ? {backgroundColor: 'transparent'} : {backgroundColor: '#80CBC4'}}
                 >
                     <div className={classes.settings}>
-                        <TextField  
-                            id="outlined-name"
-                            label="Name Board"
-                            value={nameBoard}
-                            onChange={handleChange}
-                            onBlur={handleBlur} 
-                            variant="outlined"
-                        />
-                        <SortingCard />
+                        <div>
+                            <TextField
+                                id="outlined-name"
+                                label="Name Board"
+                                value={nameBoard}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                variant="outlined"
+                            />
+                            <SortingCard />
+                        </div>
+
+                        <div>
+                            <Settings />
+                        </div>
                     </div>
-                    
+
+
+
                     <div className={classes.secondHeader}>
                         <Button variant="outlined" onClick={onAddCard} disabled={board.title === ''}>Add Card</Button>
                     </div>
@@ -151,14 +163,14 @@ export default function BoardPage() {
                     <DndProvider backend={HTML5Backend}>
                         <div className={classes.cards}>
                             {
-                                board.cards?.map(c => <TargetCard key={c.id} card={c} setisSave={setisSave}/>)  
-                            }                       
+                                board.cards?.map(c => <TargetCard key={c.id} card={c} setisSave={setisSave} />)
+                            }
                         </div>
-                    </DndProvider>           
+                    </DndProvider>
 
                 </Typography>
             </Container>
         </>
-         
+
     );
 }

@@ -19,7 +19,8 @@ export default function BoardList()
                     board: {
                         id: data[key].id,
                         title: data[key].title,
-                        cards: data[key].cards  
+                        cards: data[key].cards, 
+                        back: data[key].back,  
                     }})
             }
             setboards(arr)

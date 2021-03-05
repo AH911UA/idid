@@ -1,10 +1,9 @@
 import firebase from 'firebase';
 
-export default function getImage(img, callback)
-{
-    firebase.storage().ref().child(`images/${img}.jpg`).getDownloadURL()
+export default function getImage(img, callback) {
+    firebase.storage().ref().child(img).getDownloadURL()
         .then((url) => {
-          
+
             // var xhr = new XMLHttpRequest();
             // xhr.responseType = 'blob';
             // xhr.onload = (event) => {   
@@ -16,6 +15,22 @@ export default function getImage(img, callback)
             callback(url);
         })
         .catch((error) => {
-          
+
+        });
+}
+
+
+export function getListImage(pathImg, callback) {
+    
+    var listRef = firebase.storage().ref().child(`images/${pathImg}`);
+ 
+    listRef.listAll()
+        .then((res) => {
+            console.log("LEN : ", res.items.length);
+            res.items.forEach((itemRef) => {
+                getImage(itemRef._delegate._location.path_, url => callback(url, res.items.length))
+            });
+        }).catch((error) => {
+           
         });
 }

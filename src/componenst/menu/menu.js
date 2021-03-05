@@ -24,16 +24,10 @@ const useStyles = makeStyles({
     root: {
         flexGrow: 1,
         maxHeight: '100vh',
-        // backgroundColor: '#E8F5E9',
-        
-        // boxShadow: `0 1px 4px rgba(0, 0, 0, .3),
-        //     0 0 20px 0 rgba(0, 0, 0, .6),
-        //     23px 0 20px -23px rgba(0, 0, 0, .6),
-        //     inset 0 0 40px rgba(0, 0, 0, .1)`,
         background: 'linear-gradient(45deg, #B2DFDB 50%, #DCEDC8 90%)',
         border: 0,
         borderRadius: 3,
-        boxShadow: '0 2px 15px 2px #FAFAFA',    
+        boxShadow: '0 2px 15px 2px #FAFAFA',
     },
     logo: {
         fontStyle: 'italic',
@@ -51,15 +45,15 @@ const useStyles = makeStyles({
     },
     list: {
         width: 250,
-        '& a': 
+        '& a':
+        {
+            display: 'flex',
+            textDecoration: 'none',
+            '&:visited':
             {
-                display: 'flex',
-                textDecoration: 'none',
-                '&:visited': 
-                {
-                  color: 'black'      
-                } 
+                color: 'black'
             }
+        }
     },
 });
 
@@ -69,28 +63,28 @@ export default function Menu() {
     const [value, setValue] = React.useState(0);
 
     const { setisLoginUser } = useContext(UserContext);
-    const {setboard} = useContext(BoardContext)
-  
-    const vWidth  = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    const { setboard } = useContext(BoardContext)
+
+    const vWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
 
     const handleChange = (event, newValue) => {
-        
+
         setValue(newValue);
     };
 
     const logo = <p> d<span className={classes.logoIn}> i </span> d </p>
-    
 
-    const toggleDrawer = () =>{ 
+
+    const toggleDrawer = () => {
         setmenu(!menu);
     };
 
-    
 
-    return (   
+
+    return (
         <>
             <Paper className={classes.root}>
-                <Tabs 
+                <Tabs
                     className={classes.itemPosition}
                     value={value}
                     onChange={handleChange}
@@ -99,26 +93,26 @@ export default function Menu() {
                     justifyContent="flex-start"
                 >
                     <Tab className={classes.logo} label={logo} onClick={toggleDrawer} />
-                    
+
                     <Tab label="Sing Out"
-                        
+
                         onClick={() => {
-                                setboard({
-                                    id: 0,
-                                    title: '',
-                                    cards: [],
-                                })
-                                setisLoginUser(false)
-                            }}
-                        />
+                            setboard({
+                                id: 0,
+                                title: '',
+                                cards: [],
+                            })
+                            setisLoginUser(false)
+                        }}
+                    />
                 </Tabs>
             </Paper>
 
             <Drawer anchor='left' open={menu} onClick={() => toggleDrawer(!menu)} onClose={() => toggleDrawer(!menu)}>
-               
-                <div 
-                    className={classes.list} 
-                    role = "presentation"
+
+                <div
+                    className={classes.list}
+                    role="presentation"
                 >
                     <List>
                         <ListItem button key={'home'}>
@@ -144,9 +138,9 @@ export default function Menu() {
                         ))}
                     </List>
                 </div>
-                
-            </Drawer>   
-            
+
+            </Drawer>
+
         </>
     );
 }

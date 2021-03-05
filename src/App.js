@@ -27,14 +27,17 @@ function App() {
     const { trobber, isTrobber } = useContext(TrobberContext);
     const { isAlert, getAlert } = useContext(AlertContext);
     const { user, isLoginUser } = useContext(UserContext);
-    // const { task, card, board, setboard, updateId, setboards, boards } = useContext(BoardContext);
+    const { board } = useContext(BoardContext);
 
+    const [page, setpage] = useState(true)
+      
     useEffect(() => {
-        
-    }, [])
+        console.log("page : ", page);
+    }, [page])
     return (
         
-            <div className={classes.root}>
+            <div className={classes.root} style={board.back && !page ? 
+                {backgroundImage: `url(${board.back})`, backgroundSize: '100%'}: {}}>
     
                 {
                     isTrobber ? trobber : isAlert ? getAlert() : isLoginUser ? 
@@ -45,11 +48,11 @@ function App() {
                             
                                 <Switch>
                                     <Route exact path='/'>
-                                        <HomePage />
+                                        <HomePage setpage={setpage}/>
                                     </Route>
                                                                 
                                     <Route path='/boards/:id'>
-                                        <BoardPage />
+                                        <BoardPage setpage={setpage}/> 
                                     </Route>
                                 </Switch>
                             </Router> 

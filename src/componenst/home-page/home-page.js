@@ -32,8 +32,9 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function HomePage()
+export default function HomePage({setpage})
 {
+    setpage(true);
     const classes = useStyles();
 
     const [bcgImage, setbcgImage] = useState('');
