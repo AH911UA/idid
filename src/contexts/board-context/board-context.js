@@ -40,17 +40,17 @@ export default function BoardContextProvider({ children }) {
 
         switch (sortMode) {
             case 'Default':
-                setboard({ ...board, sorting: sortMode, cards: board.cards.map(c => ({ ...c, tasks: c.tasks.sort((a, b) => new Date(a.created) - new Date(b.created)) })) });
+                setboard({ ...board, sorting: sortMode, cards: board.cards.map(c => ({ ...c, tasks: c.tasks?.sort((a, b) => new Date(a.created) - new Date(b.created)) })) });
 
                 break;
 
             case 'Date':
-                setboard({ ...board, sorting: sortMode, cards: board.cards.map(c => ({ ...c, tasks: c.tasks.sort((a, b) => new Date(a.date) - new Date(b.date)) })) });
+                setboard({ ...board, sorting: sortMode, cards: board.cards.map(c => ({ ...c, tasks: c.tasks?.sort((a, b) => new Date(a.date) - new Date(b.date)) })) });
 
                 break;
 
             case 'Priority':
-                setboard({ ...board, sorting: sortMode, cards: board.cards.map(c => ({ ...c, tasks: c.tasks.sort((a, b) => a.priority - b.priority) })) });
+                setboard({ ...board, sorting: sortMode, cards: board.cards.map(c => ({ ...c, tasks: c.tasks?.sort((a, b) => a.priority - b.priority) })) });
                 break;
 
             default:

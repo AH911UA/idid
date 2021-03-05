@@ -50,7 +50,7 @@ function App() {
                                     <Route exact path='/'>
                                         <HomePage setpage={setpage}/>
                                     </Route>
-                                                                
+                                                                    
                                     <Route path='/boards/:id'>
                                         <BoardPage setpage={setpage}/> 
                                     </Route>

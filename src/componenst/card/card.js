@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function Card({ card, setisSave, onDrop })
+function Card({ card, setisSave, next, prev, onDrop })
 {
     const classes = useStyles();
     const { task, board, setboard } = useContext(BoardContext); 
@@ -70,6 +70,8 @@ function Card({ card, setisSave, onDrop })
                 });
     }   
    
+
+    // drop
     const [{ isOver, draggingColor, canDrop }, drop] = useDrop(() => ({
         accept: 'task',
         drop(item) {
@@ -83,12 +85,12 @@ function Card({ card, setisSave, onDrop })
             draggingColor: monitor.getItemType(),
         }),
     }), [onDrop]);
+    //
  
 
     return (
         <div className={classes.root}>
-            <Paper className={classes.card} >
-                
+            <Paper className={classes.card}>
                
                  <TextField
                     id="input-with-icon-textfield"
@@ -106,7 +108,9 @@ function Card({ card, setisSave, onDrop })
                 <div ref={drop}>    
                     {
                     
-                        card.tasks?.length ? card.tasks.map(t => t ? <Task key={t.id} cardId={card.id} _task={t} /> : '') : <p> no tasks </p>
+                        card.tasks?.length ? card.tasks.map(t => t ? 
+                            <Task key={t.id} prev={prev} next={next} cardId={card.id} _task={t} /> : '') 
+                            : <p> no tasks </p>
                     }
                 </div>
                 <Button variant="outlined" className={classes.btnAdd}

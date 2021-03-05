@@ -163,7 +163,7 @@ export default function BoardPage({setpage}) {
                     <DndProvider backend={HTML5Backend}>
                         <div className={classes.cards}>
                             {
-                                board.cards?.map(c => <TargetCard key={c.id} card={c} setisSave={setisSave} />)
+                                board.cards?.map((c, i) => <TargetCard key={c.id} prev={i > 0} next={i < board.cards.length - 1} card={c} setisSave={setisSave} />)
                             }
                         </div>
                     </DndProvider>
