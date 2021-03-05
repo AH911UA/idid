@@ -150,7 +150,6 @@ export default function Task({ cardId, _task, next, prev }) {
     }
 
     const onPrevTask = () => {
-        // {...board, }
         let position = -1;
         let currTask = null;
 
@@ -165,7 +164,6 @@ export default function Task({ cardId, _task, next, prev }) {
             }
             return c;
         })
-
 
         setboard({
             ...board, cards: arr.map((c, i) => {

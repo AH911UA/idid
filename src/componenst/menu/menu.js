@@ -5,7 +5,6 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
@@ -18,7 +17,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import { Link, useParams } from 'react-router-dom';
 import { UserContext } from '../../contexts/user-context'
 import getImage from '../../servises/getImage'
-import { BoardContext } from '../../contexts/board-context'
+import { BoardContext } from '../../contexts/board-context';
+import BoardTreeView from './board-tree-item'
 
 const useStyles = makeStyles({
     root: {
@@ -122,10 +122,11 @@ export default function Menu() {
                             </Link>
                         </ListItem>
                         <ListItem button key={'myBoards'}>
-                            <Link to='/my-boards'>
-                                <ListItemIcon>  <i class="material-icons">dashboard</i> </ListItemIcon>
-                                <ListItemText primary='My boards' />
-                            </Link>
+                            {/* <Link to='/my-boards'> */}
+                                {/* <ListItemIcon>  <i class="material-icons">dashboard</i> </ListItemIcon> */}
+                                {/* <ListItemText primary='My boards' /> */}
+                                <BoardTreeView/>
+                            {/* </Link> */}
                         </ListItem>
                     </List>
                     <Divider />

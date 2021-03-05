@@ -34,8 +34,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Board({id, title}) {
+export default function Board({id, title, back}) {
     const classes = useStyles();
+
+    console.log("BACK : ", back);
 
     const [issaved, setsaved] = useState(true)
     const { boards, setboards } = useContext(BoardContext);
@@ -61,7 +63,9 @@ export default function Board({id, title}) {
              }
             <Button 
                 className={classes.board} 
-                variant="outlined" color="primary">
+                variant="outlined" color="primary"
+                style={back ? {backgroundImage: `url(${back})`, backgroundSize: '100%'} : {backgroundImage: 'none'}}
+                >
                     {
                         title
                     }

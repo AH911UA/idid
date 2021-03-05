@@ -31,7 +31,7 @@ export default function BoardList()
         <>
             {
                 boards ? boards.map(b => <Link to={`/boards/${b.board.id}`} key={b.board.id}>
-                                            <Board key={b.board.id} id={b.board.id} title={b.board.title} />
+                                            <Board key={b.board.id} id={b.board.id} title={b.board.title} back={b.board.back} />
                                         </Link>)
                     : ''
             }

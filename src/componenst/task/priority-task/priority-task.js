@@ -40,7 +40,7 @@ export default function PriorityTask({color, id}) {
     e.stopPropagation();
     setonpriorityColor(cPriority);
  
-    setboard({...board, cards: board.cards.map(c => ({ ...c, tasks: c.tasks.map(t => t.id === id ? {...t, priority: colors.indexOf(cPriority) } : t) })) })
+    setboard({...board, cards: board.cards?.map(c => ({ ...c, tasks: c.tasks?.length ? c.tasks?.map(t => t.id === id ? {...t, priority: colors?.indexOf(cPriority) } : t) : [] })) })
 
     setAnchorEl(null);
   };

@@ -10,7 +10,8 @@ import { useContext, useState, useCallback } from 'react';
 import * as randId from 'generate-unique-id';
 import sendBoard from '../../servises/sendBoard';
 import { UserContext } from '../../contexts/user-context';
-import { getBoard } from '../../servises/getBoards'
+import { getBoard } from '../../servises/getBoards';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 //
 import { useDrop } from 'react-dnd';
@@ -22,41 +23,42 @@ const useStyles = makeStyles((theme) => ({
         overflowY: 'auto',
         overflowX: 'hidden',
         boxSizing: 'border-box',
-        
+
         minWidth: 350,
         maxWidth: 350,
         '& > *': {
-                marginRight: 10,
-                padding: '5px'
-            }
+            marginRight: 10,
+            padding: '5px'
+        }
     },
     card:
     {
         padding: '0.5rem',
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'center',
         alignIntem: 'center',
     },
-    btnAdd: 
+   
+    btnAdd:
     {
         marginTop: '0.5rem'
     }
 }));
 
-function Card({ card, setisSave, next, prev, onDrop })
-{
+function Card({ card, setisSave, next, prev, onDrop }) {
     const classes = useStyles();
-    const { task, board, setboard } = useContext(BoardContext); 
+    const { task, board, setboard } = useContext(BoardContext);
     const { user } = useContext(UserContext);
     const [cardName, setcardName] = useState(card.title)
-    
+
     const onAddTask = () => {
-    
+
         setboard({
-            ...board, cards: board.cards?.map(c => 
-                c.id === card.id ? { ...c, tasks: c.tasks ? [...c.tasks, { ...task, id: randId() , created: new Date().toUTCString()}] : [{task, id: randId(), created: new Date().toUTCString() }] } : c)
+            ...board, cards: board.cards?.map(c =>
+                c.id === card.id ? { ...c, tasks: c.tasks ? [...c.tasks, { ...task, id: randId(), created: new Date().toUTCString() }] : [{ task, id: randId(), created: new Date().toUTCString() }] } : c)
         });
-         
+
         sendBoard(user.id, board, () => {
             setisSave(true);
             setTimeout(() => setisSave(false), 2000);
@@ -65,11 +67,16 @@ function Card({ card, setisSave, next, prev, onDrop })
 
     function saveCardName() {
         setboard({
-                    ...board,
-                    cards: board.cards.map(c => c.id === card.id ? { ...c, title: cardName.trim() } : c)
-                });
-    }   
-   
+            ...board,
+            cards: board.cards.map(c => c.id === card.id ? { ...c, title: cardName.trim() } : c)
+        });
+    }
+
+    const onDeleteCard = () => {
+        setboard({...board, cards: board.cards.filter(c => c.id !== card.id)})
+    }
+
+
 
     // drop
     const [{ isOver, draggingColor, canDrop }, drop] = useDrop(() => ({
@@ -86,31 +93,33 @@ function Card({ card, setisSave, next, prev, onDrop })
         }),
     }), [onDrop]);
     //
- 
+
 
     return (
         <div className={classes.root}>
             <Paper className={classes.card}>
-               
-                 <TextField
+
+                <TextField
                     id="input-with-icon-textfield"
                     onBlur={saveCardName}
                     onChange={({ target: { value } }) => setcardName(value)}
                     value={cardName}
                     InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">
-                        <ViewAgendaIcon />
-                        </InputAdornment>
-                    ),
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <ViewAgendaIcon />
+                            </InputAdornment>
+                        ),
                     }}
                 />
-                <div ref={drop}>    
+                <div ref={drop} className={classes.card}>
                     {
-                    
-                        card.tasks?.length ? card.tasks.map(t => t ? 
-                            <Task key={t.id} prev={prev} next={next} cardId={card.id} _task={t} /> : '') 
-                            : <p> no tasks </p>
+
+                        card.tasks?.length ? card.tasks.map(t => t ?
+                            <Task key={t.id} prev={prev} next={next} cardId={card.id} _task={t} /> : '')
+                            : <Button onClick={onDeleteCard}>
+                                <DeleteIcon color="secondary" />
+                            </Button>
                     }
                 </div>
                 <Button variant="outlined" className={classes.btnAdd}
@@ -121,13 +130,11 @@ function Card({ card, setisSave, next, prev, onDrop })
     )
 }
 
-export default function TargetCard(props)
-{
+export default function TargetCard(props) {
     const [card, setcard] = useState(props.card);
-    const { task, board, setboard } = useContext(BoardContext); 
+    const { task, board, setboard } = useContext(BoardContext);
 
-    const handleDrop = useCallback((id) =>
-    {
+    const handleDrop = useCallback((id) => {
         // let tmpT = null;
         // board.cards.find(c => tmpT = c.tasks?.find(t => t.id === id));
         // console.log(tmpT);
@@ -141,7 +148,7 @@ export default function TargetCard(props)
         // b = { ...b, cards: b.cards.map(c => c.id === card.id ? thisCard : c) };
         // console.log('finish ', b);
         // setboard(b);
-         
+
     }, []);
-    return (<Card {...props}  onDrop={handleDrop}/>);
+    return (<Card {...props} onDrop={handleDrop} />);
 };
