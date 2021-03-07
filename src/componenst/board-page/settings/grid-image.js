@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import {BoardContext} from '../../../contexts/board-context';
+import Image from 'material-ui-image'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,7 +38,7 @@ export default function GridImage({arrImage}) {
                 {
                     arrImage.map((tile) => (
                         <GridListTile key={tile} cols={tile.cols || 1} onClick={(e) => onBackgroundImg(e, tile)}>
-                            <img src={tile} />
+                            <Image src={tile} />
                         </GridListTile>
                     ))
                 }

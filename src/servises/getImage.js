@@ -26,7 +26,6 @@ export function getListImage(pathImg, callback) {
  
     listRef.listAll()
         .then((res) => {
-            console.log("LEN : ", res.items.length);
             res.items.forEach((itemRef) => {
                 getImage(itemRef._delegate._location.path_, url => callback(url, res.items.length))
             });

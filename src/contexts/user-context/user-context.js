@@ -8,6 +8,7 @@ export default function UserContextProvider({ children }) {
     const [isLoginUser, setisLoginUser] = useState(false);
     const [user, setuser] = useState({
         id: null,
+        ava: ''
     })
     
     

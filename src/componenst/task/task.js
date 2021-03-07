@@ -84,7 +84,6 @@ export default function Task({ cardId, _task, next, prev }) {
     const [selectedDate, setSelectedDate] = React.useState(task.date ? new Date(task.date).toUTCString() : new Date().toUTCString());
 
     useEffect(() => {
-        console.log(selectedDate);
         settask({ ...task, date: selectedDate.toString() });
     }, [selectedDate])
 
@@ -139,7 +138,6 @@ export default function Task({ cardId, _task, next, prev }) {
                     }
                     if (position) {
                         position = false;
-                        console.log("priority task : ", currTask);
                         return { ...c, tasks: c.tasks?.length ? [...c.tasks, currTask] : [currTask] };
                     }
                     return c;

@@ -26,10 +26,8 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         padding: '10px 20px',
         marginTop: '0.8rem',
-        boxShadow: `0 1px 4px rgba(0, 0, 0, .3),
-            -23px 0 20px -23px rgba(0, 0, 0, .6),
-            23px 0 20px -23px rgba(0, 0, 0, .6),
-            inset 0 0 40px rgba(0, 0, 0, .1)`,
+        border: '1px solid #616161',
+        borderRadius: 5,
         '& a':
         {
             textDecoration: 'none'
@@ -39,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     settings: {
         width: '100%',
         display: 'flex',
-        borderBottom: '2px solid #B2DFDB',
+        borderBottom: '1px solid #616161',
         padding: '0.8rem 0 1rem',
         marginTop: '0.2rem',
         justifyContent: 'space-between'
@@ -88,7 +86,6 @@ export default function BoardPage({setpage}) {
         if (!board.title) {
             return;
         }
-        console.log("SAAAAVEEEE");
         sendBoard(user.id, board, () => {
             setisSave(true);
 

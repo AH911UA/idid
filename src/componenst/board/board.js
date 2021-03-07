@@ -37,8 +37,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Board({id, title, back}) {
     const classes = useStyles();
 
-    console.log("BACK : ", back);
-
     const [issaved, setsaved] = useState(true)
     const { boards, setboards } = useContext(BoardContext);
     const { user } = useContext(UserContext);
@@ -46,7 +44,6 @@ export default function Board({id, title, back}) {
 
     const onDelete = (e) => {
         e.preventDefault();
-        console.log('delete');
         setsaved(false);
       
         setboards(boards.filter(el => el.idBoard !== id));

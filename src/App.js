@@ -16,7 +16,7 @@ import {BoardContext} from './contexts/board-context'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        backgroundColor: '#E0F2F1',
+        backgroundColor: '#424242',
         height: '100vh'
     }
 }));
@@ -30,10 +30,7 @@ function App() {
     const { board } = useContext(BoardContext);
 
     const [page, setpage] = useState(true)
-      
-    useEffect(() => {
-        console.log("page : ", page);
-    }, [page])
+ 
     return (
         
             <div className={classes.root} style={board.back && !page ? 

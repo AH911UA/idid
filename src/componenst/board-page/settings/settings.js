@@ -41,7 +41,6 @@ export default function Settings() {
 
     useEffect(() => {
         setisLoad(!!bcgImg.length);
-        console.log(isLoad);
     }, [bcgImg])
 
     const toggleDrawer = (anchor, open) => (event) => {
@@ -62,7 +61,6 @@ export default function Settings() {
             let arr = []
             getListImage('backgroung/', (url, len) => {
                 arr.push(url);
-                console.log( ' ' + len);
                 
                 if(arr.length === len)
                     setbcgImg(arr);

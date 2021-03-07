@@ -17,20 +17,21 @@ import TextField from '@material-ui/core/TextField';
 import { useContext, useState } from 'react';
 import { AlertContext } from '../../contexts/alert-context';
 import { TrobberContext } from '../../contexts/trobber-context';
-import {UserContext} from '../../contexts/user-context';
+import { UserContext } from '../../contexts/user-context';
 import login from '../../servises/login';
 import registration from '../../servises/registration';
 import checkNick from '../../servises/nickname';
 import nickAndId from '../../servises/nickAndId'
-import { Redirect   } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { getAvatar } from '../../servises/avatar-db'
 
 const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  paper: {
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    paper: {
         backgroundColor: theme.palette.background.paper,
         border: '1px solid #1A237E',
         boxShadow: theme.shadows[5],
@@ -39,15 +40,15 @@ const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
     },
-   withoutLabel: {
+    withoutLabel: {
         marginTop: theme.spacing(3),
     },
 }));
 
 export default function ModalLogin() {
     const classes = useStyles();
-    
-    const { setalert, setisAlert } = useContext(AlertContext);  
+
+    const { setalert, setisAlert } = useContext(AlertContext);
     const { setisTrobber } = useContext(TrobberContext);
     const { isLoginUser, setisLoginUser, setuser, user } = useContext(UserContext);
 
@@ -61,7 +62,7 @@ export default function ModalLogin() {
         weight: '',
         weightRange: '',
         showPassword: false,
-    });   
+    });
     const [nick, setnick] = useState(null)
     const [isContainsNick, setisContainsNick] = useState(false);
 
@@ -76,17 +77,18 @@ export default function ModalLogin() {
     const onWellcome = (isLog, u, error, isRegistr) => {
 
         if (isLog && !isRegistr) {
-            setuser({ ...user, nick: u.nick, id: u.uid });
-            setisTrobber(false);
-            setisLoginUser(true);
+            getAvatar(u.uid, (url) => {
+                setuser({ ...user, nick: u.nick, id: u.uid, ava: url });
+                setisTrobber(false);
+                setisLoginUser(true);
+            })
         }
-        else if (isLog && isRegistr)
-        {
+        else if (isLog && isRegistr) {
             nickAndId({ nick: u.nick, id: u.uid }, (isSaveNick, _user) => {
                 setuser({ ...user, nick: u.nick, id: u.uid });
                 setisTrobber(false);
                 setisLoginUser(true);
-            })    
+            })
         }
         else {
             setisTrobber(false);
@@ -97,7 +99,7 @@ export default function ModalLogin() {
             setisAlert(true);
         }
     }
-    
+
 
     const onSend = (e) => {
         e.preventDefault();
@@ -114,104 +116,104 @@ export default function ModalLogin() {
             registration({ email, password: values.password, nick }, onWellcome)
         }
     }
-    
+
     const onCheckNick = () => {
         if (!nick) return;
         checkNick(nick, setisContainsNick);
     }
-    
- 
 
-  return (
-    <div>
-        {
-            isLogin ? <Redirect to='/'/> : ''  
-        }
-      <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            className={classes.modal}
-            open={open}
-            onClose={handleClose}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-            timeout: 500,
-            }}
-      >
-        <Fade in={open}>
-          <div  className={classes.paper}  >
-            <h2 id="transition-modal-title">Login</h2>
-            
-            <form onSubmit={onSend}>
-                    <Box display="flex" flexDirection="column">
-                    
-                        <FormControl className={classes.margin} >
-                            <InputLabel htmlFor="input-with-icon-adornment">Email</InputLabel>
-                                <Input
-                                    id="input-with-icon-adornment"
-                                    onChange={ ({target}) => setemail(target.value)}
-                                    startAdornment={
-                                        <InputAdornment position="start">
-                                            <AccountCircle />
-                                        </InputAdornment>
-                                    }
-                                />
-                        </FormControl>
-                        
-                        <Box display="flex" alignItems="center" display={isLogin ? 'none' : ''}>
-                            <TextField error={!isContainsNick} className={classes.margin}
-                                label="Nickname"
-                                type="text"
-                                onChange={ ({target}) => setnick(target.value)}
-                            />
-                            <Button color="primary" onClick={onCheckNick}>Check</Button>          
-                        </Box>
 
-                        <FormControl className={clsx(classes.margin, classes.textField)}
-                            
-                        >
-                            <InputLabel htmlFor="standard-adornment-password" >
-                                Password</InputLabel>
-                            <Input
-                                id="standard-adornment-password"
-                                type={values.showPassword ? 'text' : 'password'}
-                                value={values.password}
-                                onChange={handleChange('password')}
-                                endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={() => setValues({ ...values, showPassword: !values.showPassword })}
-                                    onMouseDown={(event) => event.preventDefault()}
-                                    >
-                                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                                    </IconButton>
-                                </InputAdornment>
-                                }
-                            />
-                        </FormControl>
-                    </Box> 
 
-                    <Box display="flex" justifyContent="space-between">          
-                            <Button onClick={() => {
-                                setisLogin(false);
-                            }} 
-                            type="submit"
-                        >   
-                            registration
+    return (
+        <div>
+            {
+                isLogin ? <Redirect to='/' /> : ''
+            }
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className={classes.modal}
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={open}>
+                    <div className={classes.paper}  >
+                        <h2 id="transition-modal-title">Login</h2>
+
+                        <form onSubmit={onSend}>
+                            <Box display="flex" flexDirection="column">
+
+                                <FormControl className={classes.margin} >
+                                    <InputLabel htmlFor="input-with-icon-adornment">Email</InputLabel>
+                                    <Input
+                                        id="input-with-icon-adornment"
+                                        onChange={({ target }) => setemail(target.value)}
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                                <AccountCircle />
+                                            </InputAdornment>
+                                        }
+                                    />
+                                </FormControl>
+
+                                <Box display="flex" alignItems="center" display={isLogin ? 'none' : ''}>
+                                    <TextField error={!isContainsNick} className={classes.margin}
+                                        label="Nickname"
+                                        type="text"
+                                        onChange={({ target }) => setnick(target.value)}
+                                    />
+                                    <Button color="primary" onClick={onCheckNick}>Check</Button>
+                                </Box>
+
+                                <FormControl className={clsx(classes.margin, classes.textField)}
+
+                                >
+                                    <InputLabel htmlFor="standard-adornment-password" >
+                                        Password</InputLabel>
+                                    <Input
+                                        id="standard-adornment-password"
+                                        type={values.showPassword ? 'text' : 'password'}
+                                        value={values.password}
+                                        onChange={handleChange('password')}
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={() => setValues({ ...values, showPassword: !values.showPassword })}
+                                                    onMouseDown={(event) => event.preventDefault()}
+                                                >
+                                                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        }
+                                    />
+                                </FormControl>
+                            </Box>
+
+                            <Box display="flex" justifyContent="space-between">
+                                <Button onClick={() => {
+                                    setisLogin(false);
+                                }}
+                                    type="submit"
+                                >
+                                    registration
                         </Button>
-                        
-                        <Button color="primary" onClick={ () => setisLogin(true) }
-                            type="submit" 
-                        >
-                            Login
+
+                                <Button color="primary" onClick={() => setisLogin(true)}
+                                    type="submit"
+                                >
+                                    Login
                         </Button>
-                    </Box>  
-                </form>              
-            </div>
-        </Fade>
-      </Modal>
-    </div>
-  );
+                            </Box>
+                        </form>
+                    </div>
+                </Fade>
+            </Modal>
+        </div>
+    );
 }

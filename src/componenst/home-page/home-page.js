@@ -17,7 +17,7 @@ import {sendBoards} from '../../servises/sendBoard';
 import {BoardContext} from '../../contexts/board-context'
 const useStyles = makeStyles((theme) => ({
     root: {
-        backgroundColor: '#FFF3E0',
+        backgroundColor: '#212121',
         height: 'calc(100vh - 0.8rem * 2 - 74px)',
         padding: '50px',
         marginTop: '0.8rem',
@@ -40,27 +40,14 @@ export default function HomePage({setpage})
     const [bcgImage, setbcgImage] = useState('');
     const { trobber, settrobber } = useContext(TrobberContext);
     const {setboard} = useContext(BoardContext)
-    
- 
-    useEffect(() => {
-        // settrobber(true);
-        // getImage('backgroung/background', setbcgImage);
-    }, []);
 
      
-
     return (
 
         <>          
             <CssBaseline />
             <Container maxWidth="lg" fixed>
-                <Typography component="div"
-                    className={classes.root}
-                    // style={{
-                    //     backgroundImage: `url(${bcgImage})`,
-                    //    ,
-                    // }}
-                >
+                <Typography component="div" className={classes.root}>
                     <Link to='/boards/new-board' onClick={() =>  setboard({
                                                                             id: randId(),
                                                                             title: '',

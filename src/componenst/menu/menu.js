@@ -18,16 +18,18 @@ import { Link, useParams } from 'react-router-dom';
 import { UserContext } from '../../contexts/user-context'
 import getImage from '../../servises/getImage'
 import { BoardContext } from '../../contexts/board-context';
-import BoardTreeView from './board-tree-item'
+import BoardTreeView from './board-tree-item';
+import ImageAvatars from './avatar'
 
 const useStyles = makeStyles({
     root: {
         flexGrow: 1,
         maxHeight: '100vh',
-        background: 'linear-gradient(45deg, #B2DFDB 50%, #DCEDC8 90%)',
+        // background: 'linear-gradient(45deg, #B2DFDB 50%, #DCEDC8 90%)',
+        backgroundColor: '#212121',
         border: 0,
         borderRadius: 3,
-        boxShadow: '0 2px 15px 2px #FAFAFA',
+        // boxShadow: '0 2px 15px 2px #FAFAFA',
     },
     logo: {
         fontStyle: 'italic',
@@ -41,6 +43,10 @@ const useStyles = makeStyles({
         '& > div > div': {
             display: 'flex',
             justifyContent: 'space-between',
+        },
+        '&  *:hover':
+        {
+            color: '#eee'
         }
     },
     list: {
@@ -51,7 +57,7 @@ const useStyles = makeStyles({
             textDecoration: 'none',
             '&:visited':
             {
-                color: 'black'
+                backgroundColor: 'black'
             }
         }
     },
@@ -92,7 +98,10 @@ export default function Menu() {
                     textColor="primary"
                     justifyContent="flex-start"
                 >
+                    
                     <Tab className={classes.logo} label={logo} onClick={toggleDrawer} />
+
+                    <Tab label={<ImageAvatars/>}/> 
 
                     <Tab label="Sing Out"
 
