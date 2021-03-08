@@ -35,7 +35,10 @@ const useStyles = makeStyles((theme) => ({
         '& svg':
         {
             color: '#424242'
-        }
+        },
+        '& ul>div:first-child:hover': {
+            backgroundColor: '#E65100'
+        },
     }
 }));
 

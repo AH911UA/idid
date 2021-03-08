@@ -8,12 +8,9 @@ import { BoardContext } from '../../contexts/board-context'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    marginLeft: theme.spacing(1),
     minWidth: 120,
   },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
+ 
 }));
 
  

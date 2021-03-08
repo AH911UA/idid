@@ -26,35 +26,43 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         padding: '10px 20px',
         marginTop: '0.8rem',
-        border: '1px solid #616161',
         borderRadius: 5,
         '& a':
         {
             textDecoration: 'none'
         },
-
     },
     settings: {
         width: '100%',
         display: 'flex',
-        borderBottom: '1px solid #616161',
         padding: '0.8rem 0 1rem',
         marginTop: '0.2rem',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        '& button': 
+        {
+            height: '100%'
+        },
+        '& > div > div:not(:first-child),  & button': 
+        {
+            marginLeft: theme.spacing(1),
+        }
     },
     secondHeader:
     {
         padding: '0.8rem 0',
         marginTop: '0.8rem 0',
+        
     },
     cards: {
-        padding: '0.8rem 0',
+        padding: '0.8rem',
         marginTop: '0.8rem 0',
         display: 'flex',
         overflowY: 'hidden',
         minHeight: '70vh',
         // overflow: 'scroll',
         boxSizing: 'border-box',
+        border: '1px solid #616161',
+        borderRadius: 5
     },
 
 }));
@@ -144,17 +152,12 @@ export default function BoardPage({setpage}) {
                                 variant="outlined"
                             />
                             <SortingCard />
+                            <Button variant="outlined" onClick={onAddCard} disabled={board.title === ''}>Add Card</Button>
                         </div>
 
                         <div>
                             <Settings />
                         </div>
-                    </div>
-
-
-
-                    <div className={classes.secondHeader}>
-                        <Button variant="outlined" onClick={onAddCard} disabled={board.title === ''}>Add Card</Button>
                     </div>
 
                     <DndProvider backend={HTML5Backend}>

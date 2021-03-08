@@ -21,15 +21,16 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             color: '#E65100',
             borderColor: '#E65100'
-        }
+        },
     },
     deleteBtn: {
         position: 'absolute',
         right: 10,
         bottom: 10,
+        color: '#212121',
         '&:hover':
         {
-            color: '#00C853'
+            color: 'red'
         }
     }
 }));

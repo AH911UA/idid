@@ -30,7 +30,7 @@ const useStyles = makeStyles({
         // background: 'linear-gradient(45deg, #B2DFDB 50%, #DCEDC8 90%)',
         backgroundColor: '#212121',
         border: 0,
-        borderRadius: 3,
+        borderRadius: 0,
         // boxShadow: '0 2px 15px 2px #FAFAFA',
     },
     logo: {
@@ -57,6 +57,17 @@ const useStyles = makeStyles({
         height: '100%',
         backgroundColor: '#212121',
         color: '#eee',
+        '& *:hover':
+        {
+            cursor: 'pointer',
+        },
+        '& ul>div:first-child:hover': {
+            backgroundColor: '#E65100',
+        },
+        '& .MuiTouchRipple-root:hover':
+        {
+            backgroundColor: 'red'
+        },
         '& svg, & i': {
             color: '#424242',
         },
@@ -72,6 +83,10 @@ const useStyles = makeStyles({
             },
         }
     },
+    //  '.MuiTouchRipple-root:hover':
+    //     {
+    //         backgroundColor: 'red'
+    //     },
 });
 
 export default function Menu() {
@@ -168,7 +183,7 @@ export default function Menu() {
                             />
                             <label htmlFor="raised-button-file" style={{display: 'flex'}}>
                                 <ListItemIcon> <AccountBoxIcon /> </ListItemIcon>
-                                <ListItemText primary='Load avatar'   />
+                                <ListItemText primary='Load avatar'/>
                             </label>
                             
                         </ListItem>

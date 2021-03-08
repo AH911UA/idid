@@ -22,15 +22,18 @@ import { Link, useParams } from 'react-router-dom';
 const useTreeItemStyles = makeStyles((theme) => ({
     root: {
         color: theme.palette.text.secondary,
+        '& ul>div:first-child:hover': {
+            backgroundColor: '#212121'
+        },
         '&:hover > $content': {
-            backgroundColor: theme.palette.action.hover,
+            backgroundColor: '#E65100',
         },
         '&:focus > $content, &$selected > $content': {
-            backgroundColor: `#212121`,
+            backgroundColor: `#E65100`,
             color: '#eee',
         },
         '&:focus > $content $label, &:hover > $content $label, &$selected > $content $label': {
-            backgroundColor: 'transparent',
+            backgroundColor: '#E65100',
         },
     },
     content: {
