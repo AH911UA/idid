@@ -6,7 +6,7 @@ import { UserContext } from './../../../contexts/user-context';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import {sendAvatar} from '../../../servises/avatar-db';
+import { sendAvatar } from '../../../servises/avatar-db';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -27,6 +27,12 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.getContrastText(deepOrange[500]),
         backgroundColor: deepOrange[500],
     },
+    avaMenu: {
+        '& > div': {
+            backgroundColor: '#212121',
+            color: '#eee'
+        }
+    }
 }));
 
 export default function ImageAvatars() {
@@ -48,8 +54,7 @@ export default function ImageAvatars() {
 
         loadAva(e, (url) => {
 
-            if(url === user.ava) return;
-
+            if (url === user.ava) return;
             sendAvatar(user, url, () => setuser({ ...user, ava: url }))
         });
 
@@ -60,11 +65,11 @@ export default function ImageAvatars() {
     return (
         <div className={classes.root}>
             {/* <Avatar onClick={onAvatar} alt="Remy Sharp" src="/broken-image.jpg" className={classes.orange} /> */}
-            <Avatar alt="Remy Sharp" 
-            // className={classes.orange}
-            className={classes.large}
+            <Avatar alt="Remy Sharp"
+                // className={classes.orange}
+                className={classes.large}
                 onClick={onAvatar}
-                aria-haspopup="true" 
+                aria-haspopup="true"
                 src={`${user.ava}`}
             >
                 {
@@ -81,6 +86,7 @@ export default function ImageAvatars() {
                 }}
                 open={open}
                 onClose={offAvatar}
+                className={classes.avaMenu}
             >
                 <input
                     accept="image/*"
@@ -102,7 +108,7 @@ export default function ImageAvatars() {
 }
 
 
-function loadAva(e, callback) {
+export function loadAva(e, callback) {
 
     for (let i = 0; i < e.target.files.length; i++) {
         let file = e.target.files[i];

@@ -8,7 +8,10 @@ export function sendAvatar(user, url, callback) {
 export function getAvatar(id, callback) {
     firebase.database().ref(`users/avatar/${id}`)
         .on('value', (snapshot) => {
+            
             const data = snapshot.val();
+
+            console.log('AVATAR URL ', data);
             callback(data);
         });
 }

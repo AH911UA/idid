@@ -11,11 +11,19 @@ const useStyles = makeStyles((theme) => ({
         flexWrap: 'wrap',
         justifyContent: 'space-around',
         overflow: 'hidden',
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: '#212121',
+        color: '#eee',
+        padding: 0,
+        '& GridList': 
+        {
+            backgroundColor: '#212121'
+        }
     },
     gridList: {
         width: 500,
         height: 450,
+        padding: '0.3rem',
+       
     },
 }));
 
@@ -34,7 +42,7 @@ export default function GridImage({arrImage}) {
     
     return (
         <div className={classes.root}>
-            <GridList cellHeight={350} className={classes.gridList} cols={2}>
+            <GridList cellHeight={220} className={classes.gridList} cols={2}>
                 {
                     arrImage.map((tile) => (
                         <GridListTile key={tile} cols={tile.cols || 1} onClick={(e) => onBackgroundImg(e, tile)}>

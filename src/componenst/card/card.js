@@ -38,6 +38,8 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignIntem: 'center',
+        // color: '#eee',
+        // backgroundColor: '#212121'
     },
    
     btnAdd:

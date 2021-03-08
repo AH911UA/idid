@@ -16,7 +16,7 @@ import {BoardContext} from './contexts/board-context'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        backgroundColor: '#424242',
+        backgroundColor: '#252525',
         height: '100vh'
     }
 }));

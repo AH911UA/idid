@@ -13,11 +13,10 @@ export default function login ({ email, password }, callback){
 }
 
 function getNick(user, callback) {
-
+     
     firebase.database().ref(`users/userId/${user.uid}`)
         .on('value', (snapshot) => {
             const data = snapshot.val();
-           
             for (const key in data) {
                 if (data[key]['nick']) {
                     callback(data[key]['nick']);

@@ -26,15 +26,15 @@ const useTreeItemStyles = makeStyles((theme) => ({
             backgroundColor: theme.palette.action.hover,
         },
         '&:focus > $content, &$selected > $content': {
-            backgroundColor: `var(--tree-view-bg-color, ${theme.palette.grey[400]})`,
-            color: 'var(--tree-view-color)',
+            backgroundColor: `#212121`,
+            color: '#eee',
         },
         '&:focus > $content $label, &:hover > $content $label, &$selected > $content $label': {
             backgroundColor: 'transparent',
         },
     },
     content: {
-        color: theme.palette.text.secondary,
+        color: '#eee',
         borderTopRightRadius: theme.spacing(1),
         borderBottomRightRadius: theme.spacing(1),
         paddingRight: theme.spacing(1),
@@ -144,8 +144,7 @@ export default function BoardTreeView() {
                             labelText={b.board.title}
                             labelIcon={DeveloperBoardIcon}
                             // labelInfo={b.board.cards?.reduce((c, curr) =>  c + (curr.tasks ? curr.tasks?.length : 0)  , 0)}
-                            color="#1a73e8"
-                            bgColor="#e8f0fe"
+                           
                         />
                     </Link>)
                 }

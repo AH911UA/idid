@@ -68,7 +68,7 @@ export default function BoardPage({setpage}) {
     const { boards, card, board, setboard, SortingBoard } = useContext(BoardContext);
     const { user } = useContext(UserContext);
     const [isSave, setisSave] = useState(false);
-    const [nameBoard, setnameBoard] = useState('')
+    const [nameBoard, setnameBoard] = useState('');
 
     useEffect(() => {
         if (id !== 'new-board') {

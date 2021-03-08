@@ -19,7 +19,9 @@ import { UserContext } from '../../contexts/user-context'
 import getImage from '../../servises/getImage'
 import { BoardContext } from '../../contexts/board-context';
 import BoardTreeView from './board-tree-item';
-import ImageAvatars from './avatar'
+import ImageAvatars, {loadAva} from './avatar';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import {sendAvatar} from '../../servises/avatar-db';
 
 const useStyles = makeStyles({
     root: {
@@ -40,25 +42,34 @@ const useStyles = makeStyles({
         fontSize: '1.2rem',
     },
     itemPosition: {
+
         '& > div > div': {
             display: 'flex',
             justifyContent: 'space-between',
         },
         '&  *:hover':
         {
-            color: '#eee'
+            color: '#E65100'
         }
     },
     list: {
         width: 250,
+        height: '100%',
+        backgroundColor: '#212121',
+        color: '#eee',
+        '& svg, & i': {
+            color: '#424242',
+        },
+
         '& a':
         {
             display: 'flex',
+            color: '#eee',
             textDecoration: 'none',
             '&:visited':
             {
-                backgroundColor: 'black'
-            }
+                backgroundColor: '#eee'
+            },
         }
     },
 });
@@ -69,7 +80,8 @@ export default function Menu() {
     const [value, setValue] = React.useState(0);
 
     const { setisLoginUser } = useContext(UserContext);
-    const { setboard } = useContext(BoardContext)
+    const { setboard } = useContext(BoardContext);
+    const { user, setuser } = useContext(UserContext);
 
     const vWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
 
@@ -98,10 +110,10 @@ export default function Menu() {
                     textColor="primary"
                     justifyContent="flex-start"
                 >
-                    
+
                     <Tab className={classes.logo} label={logo} onClick={toggleDrawer} />
 
-                    <Tab label={<ImageAvatars/>}/> 
+                    <Tab label={<ImageAvatars />} />
 
                     <Tab label="Sing Out"
 
@@ -123,7 +135,7 @@ export default function Menu() {
                     className={classes.list}
                     role="presentation"
                 >
-                    <List>
+                    <List >
                         <ListItem button key={'home'}>
                             <Link to='/'>
                                 <ListItemIcon>  <i class="material-icons">home</i> </ListItemIcon>
@@ -132,25 +144,38 @@ export default function Menu() {
                         </ListItem>
                         <ListItem button key={'myBoards'}>
                             {/* <Link to='/my-boards'> */}
-                                {/* <ListItemIcon>  <i class="material-icons">dashboard</i> </ListItemIcon> */}
-                                {/* <ListItemText primary='My boards' /> */}
-                                <BoardTreeView/>
+                            {/* <ListItemIcon>  <i class="material-icons">dashboard</i> </ListItemIcon> */}
+                            {/* <ListItemText primary='My boards' /> */}
+                            <BoardTreeView />
                             {/* </Link> */}
                         </ListItem>
                     </List>
                     <Divider />
                     <List>
-                        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
+
+                        <ListItem button key='Avatar'>
+                            <input
+                                accept="image/*"
+                                className={classes.input}
+                                style={{ display: 'none' }}
+                                id="raised-button-file"
+                                type="file"
+                                // onClick={e => onLoadAva(e)}
+                                onChange={e => (e, (url) => {
+                                    if (url === user.ava) return;
+                                    sendAvatar(user, url, () => setuser({ ...user, ava: url }))
+                                })}
+                            />
+                            <label htmlFor="raised-button-file" style={{display: 'flex'}}>
+                                <ListItemIcon> <AccountBoxIcon /> </ListItemIcon>
+                                <ListItemText primary='Load avatar'   />
+                            </label>
+                            
+                        </ListItem>
                     </List>
                 </div>
 
             </Drawer>
-
         </>
     );
 }

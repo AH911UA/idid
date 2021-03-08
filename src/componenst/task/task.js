@@ -24,7 +24,7 @@ import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        marginTop: '1rem'
+        marginTop: '1rem',
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),
@@ -175,9 +175,6 @@ export default function Task({ cardId, _task, next, prev }) {
     }
 
 
-
-
-
     // drag
     const [{ isDragging }, drag] = useDrag(() => ({
         item: { type: `task`, id: task.id },
@@ -192,9 +189,6 @@ export default function Task({ cardId, _task, next, prev }) {
         cursor: 'move',
     }), [isDragging]);
     //
-
-
-
 
 
     return (

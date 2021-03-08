@@ -26,6 +26,16 @@ const useStyles = makeStyles((theme) => ({
     },
     list: {
         width: 500,
+        height: '100%',
+        backgroundColor: '#212121',
+        '& div': 
+        {
+            color: '#eeeeee'
+        },
+        '& svg':
+        {
+            color: '#424242'
+        }
     }
 }));
 
