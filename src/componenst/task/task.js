@@ -5,10 +5,13 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { BoardContext } from '../../contexts/board-context'
+import { BoardContext } from '../../contexts/board-context';
+import { UserContext } from '../../contexts/user-context'; 
+
 import TextField from '@material-ui/core/TextField';
 import DateFnsUtils from '@date-io/date-fns';
 import PriorityTask from './priority-task'
+import sendBoard from '../../servises/sendBoard';
 //
 import { useDrag } from 'react-dnd';
 //
@@ -64,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Task({ cardId, _task, next, prev }) {
+export default function Task({ cardId, _task, next, prev, setisSave }) {
 
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
@@ -72,7 +75,9 @@ export default function Task({ cardId, _task, next, prev }) {
     const [onDescriptionState, setonDescriptionState] = useState(_task.description)
     const [onExcState, setonExcState] = useState(_task.exs)
 
-    const { board, setboard } = useContext(BoardContext);
+    const { board, setboard, saveBoard } = useContext(BoardContext);
+    const { user } = useContext(UserContext);
+
     const [task, settask] = useState({ ..._task });
     const [isTask, setisTask] = useState(false);
     const [isColor, setisColor] = useState(false);
@@ -86,12 +91,18 @@ export default function Task({ cardId, _task, next, prev }) {
     useEffect(() => {
         settask({ ...task, date: selectedDate.toString() });
     }, [selectedDate])
-
+ 
     useEffect(() => {
         setboard({
             ...board,
             cards: board.cards.map(c => c.id === cardId ? { ...c, tasks: c.tasks?.map(t => t.id === task.id ? task : t) } : c)
         });
+
+        saveBoard(user.id, setisSave);
+        // sendBoard(user.id, board, () => {
+        //     setisSave(true);
+        //     setTimeout(() => setisSave(false), 2000);
+        // });
 
     }, [task])
 
@@ -118,6 +129,11 @@ export default function Task({ cardId, _task, next, prev }) {
 
     const onDeleteTask = () => {
         setboard({ ...board, cards: board.cards.map(c => ({ ...c, tasks: c.tasks.filter(t => t.id !== task.id) })) });
+        saveBoard(user.id, setisSave);
+        // sendBoard(user.id, board, () => {
+        //     setisSave(true);
+        //     setTimeout(() => setisSave(false), 2000);
+        // });
     }
 
     const onNextTask = () => {
@@ -144,7 +160,11 @@ export default function Task({ cardId, _task, next, prev }) {
                 })
             }
         )
-
+        saveBoard(user.id, setisSave);
+        // sendBoard(user.id, board, () => {
+        //     setisSave(true);
+        //     setTimeout(() => setisSave(false), 2000);
+        // });
     }
 
     const onPrevTask = () => {
@@ -172,6 +192,7 @@ export default function Task({ cardId, _task, next, prev }) {
                 return c;
             })
         })
+        saveBoard(user.id, setisSave);
     }
 
 
@@ -203,7 +224,7 @@ export default function Task({ cardId, _task, next, prev }) {
                         aria-controls="panel1bh-content"
                         id="panel1bh-header"
                     >
-                        <PriorityTask id={task.id} color={task.priority} />
+                        <PriorityTask id={task.id} color={task.priority} setisSave={setisSave} uid={user.id}/>
                         <TextField
                             onFocus={() => setisTask(true)}
                             id="outlined-size-small"

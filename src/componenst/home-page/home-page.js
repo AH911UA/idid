@@ -47,7 +47,7 @@ export default function HomePage({ setpage }) {
 
     const [bcgImage, setbcgImage] = useState('');
     const { trobber, settrobber } = useContext(TrobberContext);
-    const { setboard } = useContext(BoardContext);
+    const { setboard, board, card } = useContext(BoardContext);
     const { notes, setnotes } = useContext(NotesContext);
     const { user } = useContext(UserContext);
 
@@ -79,7 +79,8 @@ export default function HomePage({ setpage }) {
                             <Link to='/boards/new-board' onClick={() => setboard({
                                 id: randId(),
                                 title: '',
-                                cards: [],
+                                back: '_empty',
+                                cards: [card],
                             })}>
                                 <Board title="new board" />
                             </Link>

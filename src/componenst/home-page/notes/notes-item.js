@@ -61,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
     {
         '& textarea':
         {
+            outline: 'none',
             backgroundColor: 'transparent',
             border: '1px solid #212121',
             // borderColor: '#424242',
@@ -104,9 +105,6 @@ export function NotesItem({ _text = 'New note', id, date }) {
             setnotes(notes.find(n => n.id === note.id) !== undefined
                 ? notes.map(n => n.id === note.id ? { ...n, text: text } : n)
                 : [...notes, note]);
-
-            if (_text === 'New note')
-                settext(_text)
         })
     }
 

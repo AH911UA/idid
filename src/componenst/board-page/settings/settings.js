@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Settings() {
+export default function Settings({setisSave}) {
     const classes = useStyles();
 
     const [right, setState] = useState(false);
@@ -104,7 +104,7 @@ export default function Settings() {
 
                             <ListItem>
                                 {
-                                    isLoad ? <GridImage arrImage={bcgImg}/> : ''
+                                    isLoad ? <GridImage arrImage={bcgImg} setisSave={setisSave}/> : ''
                                 }
                             </ListItem>
                            

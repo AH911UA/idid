@@ -1,8 +1,10 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import {BoardContext} from '../../../contexts/board-context';
+import {UserContext} from '../../../contexts/user-context';
+
 import Image from 'material-ui-image'
 
 const useStyles = makeStyles((theme) => ({
@@ -27,17 +29,19 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function GridImage({arrImage}) {
+export default function GridImage({arrImage, setisSave}) {
     const classes = useStyles();
 
-    const {board, setboard} = useContext(BoardContext)
+    const {board, setboard, saveBoard} = useContext(BoardContext);
+    const {user} = useContext(UserContext);
+    
+    useEffect(() => {
+        saveBoard(user.id, setisSave);
+    }, [board.back])
 
     const onBackgroundImg = (e, tile) => {
         e.stopPropagation();
         setboard({...board, back: tile});
-        
-        
-        // todo set board background image
     }
     
     return (

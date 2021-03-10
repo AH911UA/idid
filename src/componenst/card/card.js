@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Card({ card, setisSave, next, prev, onDrop }) {
     const classes = useStyles();
-    const { task, board, setboard } = useContext(BoardContext);
+    const { task, board, setboard, saveBoard } = useContext(BoardContext);
     const { user } = useContext(UserContext);
     const [cardName, setcardName] = useState(card.title)
 
@@ -61,10 +61,11 @@ function Card({ card, setisSave, next, prev, onDrop }) {
                 c.id === card.id ? { ...c, tasks: c.tasks ? [...c.tasks, { ...task, id: randId(), created: new Date().toUTCString() }] : [{ task, id: randId(), created: new Date().toUTCString() }] } : c)
         });
 
-        sendBoard(user.id, board, () => {
-            setisSave(true);
-            setTimeout(() => setisSave(false), 2000);
-        });
+        saveBoard(user.id, setisSave);
+        // sendBoard(user.id, board, () => {
+        //     setisSave(true);
+        //     setTimeout(() => setisSave(false), 2000);
+        // });
     }
 
     function saveCardName() {
@@ -72,10 +73,19 @@ function Card({ card, setisSave, next, prev, onDrop }) {
             ...board,
             cards: board.cards.map(c => c.id === card.id ? { ...c, title: cardName.trim() } : c)
         });
+
+        saveBoard(user.id, setisSave);
+
+        // sendBoard(user.id, board, () => {
+        //     setisSave(true);
+        //     setTimeout(() => setisSave(false), 2000);
+        // });
     }
 
     const onDeleteCard = () => {
         setboard({...board, cards: board.cards.filter(c => c.id !== card.id)})
+
+        saveBoard(user.id, setisSave);
     }
 
 
@@ -117,8 +127,8 @@ function Card({ card, setisSave, next, prev, onDrop }) {
                 <div ref={drop} className={classes.card}>
                     {
 
-                        card.tasks?.length ? card.tasks.map(t => t ?
-                            <Task key={t.id} prev={prev} next={next} cardId={card.id} _task={t} /> : '')
+                        card.tasks?.length > 1 ? card.tasks.map(t => t ?
+                            <Task key={t.id} prev={prev} next={next} cardId={card.id} _task={t} setisSave={setisSave}/> : '')
                             : <Button onClick={onDeleteCard}>
                                 <DeleteIcon color="secondary" />
                             </Button>

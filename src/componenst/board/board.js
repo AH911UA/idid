@@ -63,7 +63,7 @@ export default function Board({id, title, back}) {
             <Button 
                 className={classes.board} 
                 variant="outlined" color="primary"
-                style={back ? {backgroundImage: `url(${back})`, backgroundSize: '100%'} : {backgroundImage: 'none'}}
+                style={back !== '_empty' ? {backgroundImage: `url(${back})`, backgroundSize: '100%'} : {backgroundImage: 'none'}}
                 >
                     {
                         title

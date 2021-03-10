@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import * as randId from 'generate-unique-id';
+import sendBoard from '../../servises/sendBoard';
 
 export const BoardContext = React.createContext({});
 
@@ -8,6 +9,7 @@ export default function BoardContextProvider({ children }) {
     function updateId() {
         setboard({ ...board, id: randId() })
     }
+ 
 
     const task = {
         id: 0,
@@ -19,28 +21,38 @@ export default function BoardContextProvider({ children }) {
         color: null,
     }
 
-    const card = {
+    const card = { 
         id: 0,
         title: 'name card',
-        tasks: []
+        tasks: ['']
     };
 
     const [board, setboard] = useState({
         id: 0,
         sorting: 'Default',
         title: '',
-        back: '',
-        cards: [],
+        back: '_empty',
+        cards: [''],
     });
 
     const [boards, setboards] = useState();
 
+    function saveBoard(userid, setisSave) {
+        sendBoard(userid, board, () => {
+            console.log('SAVE ------------> ', board);
+            setisSave(true);
+            setTimeout(() => setisSave(false), 1000);
+        })
+    }
+
 
     function SortingBoard(sortMode) {
 
+        if(!board.cards?.length) return;
+
         switch (sortMode) {
             case 'Default':
-                setboard({ ...board, sorting: sortMode, cards: board.cards.map(c => ({ ...c, tasks: c.tasks?.sort((a, b) => new Date(a.created) - new Date(b.created)) })) });
+                setboard({ ...board, sorting: sortMode, cards: board.cards?.map(c => ({ ...c, tasks: c.tasks?.sort((a, b) => new Date(a.created) - new Date(b.created)) })) });
 
                 break;
 
@@ -60,7 +72,7 @@ export default function BoardContextProvider({ children }) {
 
     return (
         <BoardContext.Provider value={{
-            task, card, board, setboard, updateId, setboards, boards, SortingBoard
+            task, card, board, setboard, updateId, setboards, boards, SortingBoard, saveBoard
         }}>
             { children}
         </BoardContext.Provider>

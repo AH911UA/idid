@@ -20,7 +20,6 @@ import Settings from './settings'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        backgroundColor: '#80CBC4',
         height: 'calc(100vh - 0.8rem * 2 - 74px)',
         maxHeight: 'calc(100vh - 0.8rem * 2 - 74px)',
         width: '100%',
@@ -38,11 +37,11 @@ const useStyles = makeStyles((theme) => ({
         padding: '0.8rem 0 1rem',
         marginTop: '0.2rem',
         justifyContent: 'space-between',
-        '& button': 
+        '& button':
         {
             height: '100%'
         },
-        '& > div > div:not(:first-child),  & button': 
+        '& > div > div:not(:first-child),  & button':
         {
             marginLeft: theme.spacing(1),
         }
@@ -51,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     {
         padding: '0.8rem 0',
         marginTop: '0.8rem 0',
-        
+
     },
     cards: {
         padding: '0.8rem',
@@ -68,12 +67,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function BoardPage({setpage}) {
+export default function BoardPage({ setpage }) {
     setpage(false)
     const classes = useStyles();
     const { id } = useParams();
 
-    const { boards, card, board, setboard, SortingBoard } = useContext(BoardContext);
+    const { boards, card, board, setboard, saveBoard, task } = useContext(BoardContext);
     const { user } = useContext(UserContext);
     const [isSave, setisSave] = useState(false);
     const [nameBoard, setnameBoard] = useState('');
@@ -89,17 +88,20 @@ export default function BoardPage({setpage}) {
         }
     }, [])
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (!board.title) {
-            return;
-        }
-        sendBoard(user.id, board, () => {
-            setisSave(true);
+    //     if (board.title === 'My Board') {
+    //         return;
+    //     }
+ 
+    //         sendBoard(user.id, board, () => {
+    //             console.log('FUCK ------------> ');
+    //             setisSave(true);
+    //             setTimeout(() => setisSave(false), 1000);
+    //         })
+   
 
-            setTimeout(() => setisSave(false), 1000);
-        })
-    }, [board])
+    // }, [board])
 
 
 
@@ -109,20 +111,24 @@ export default function BoardPage({setpage}) {
 
     const handleBlur = () => {
 
-        if (!nameBoard) {
+        if (!nameBoard || nameBoard === 'New Board') {
             return;
-        }
+        } 
 
-        sendBoard(user.id, board, () => {
-            setboard({ ...board, title: nameBoard.trim() });
-            setisSave(!isSave);
-            setTimeout(() => setisSave(false), 1000);
-        })
+        console.log("HELLLO ");
+
+        setboard({ ...board, title: nameBoard.trim()});
+        // saveBoard(user.id, setisSave);
     }
 
     const onAddCard = () => {
-
-        setboard({ ...board, cards: [...board?.cards, { ...card, id: randId() }] });
+        // debugger
+        if(board.cards === undefined)
+            setboard({...board, cards: [{...card, id: randId()}]})
+        else 
+            setboard({ ...board, cards: [...board?.cards, { ...card, id: randId() }] });
+            
+        saveBoard(user.id, setisSave);
 
         // sendBoard(user.id, board, () => {
         //     setisSave(!isSave);
@@ -139,8 +145,11 @@ export default function BoardPage({setpage}) {
             <Container maxWidth='false'>
                 <Typography component="div"
                     className={classes.root}
-                    style={board.back ? {backgroundColor: 'transparent'} : {backgroundColor: '#80CBC4'}}
+                    style={board.back !== '_empty' ? { backgroundColor: 'transparent' } : { backgroundColor: '#BDBDBD' }}
                 >
+                    {
+                        console.log(board)
+                    }
                     <div className={classes.settings}>
                         <div>
                             <TextField
@@ -156,7 +165,7 @@ export default function BoardPage({setpage}) {
                         </div>
 
                         <div>
-                            <Settings />
+                            <Settings setisSave={setisSave}/>
                         </div>
                     </div>
 

@@ -21,27 +21,32 @@ const useStyles = makeStyles((theme) => ({
     height: 20,
     borderRadius: '50%',
     backgroundColor: 'red'
-  } 
+  }
 }));
 
 export const colors = ['#EEEEEE', '#388E3C', '#FBC02D', '#0288D1', '#7B1FA2', '#E64A19']
 
-export default function PriorityTask({color, id}) {
+export default function PriorityTask({ color, id, setisSave, uid }) {
 
   const classes = useStyles();
 
-  const { board, setboard } = useContext(BoardContext);
-  
+  const { board, setboard, saveBoard } = useContext(BoardContext);
+
   const [onpriorityColor, setonpriorityColor] = useState(color ? colors[color] : '#EEEEEE')
 
   const [anchorEl, setAnchorEl] = useState(null);
- 
+
+
+  useEffect(() => {
+
+    saveBoard(uid, setisSave);
+  }, [board])
+
   const handleClose = (e, cPriority) => {
     e.stopPropagation();
-    setonpriorityColor(cPriority);
- 
-    setboard({...board, cards: board.cards?.map(c => ({ ...c, tasks: c.tasks?.length ? c.tasks?.map(t => t.id === id ? {...t, priority: colors?.indexOf(cPriority) } : t) : [] })) })
 
+    setboard({ ...board, cards: board.cards?.map(c => ({ ...c, tasks: c.tasks?.length ? c.tasks?.map(t => t.id === id ? { ...t, priority: colors?.indexOf(cPriority) } : t) : [] })) })
+    setonpriorityColor(cPriority);
     setAnchorEl(null);
   };
 
@@ -49,20 +54,18 @@ export default function PriorityTask({color, id}) {
     e.stopPropagation();
     setAnchorEl(null);
   }
-  
+
 
   const onPriority = event => {
     setAnchorEl(event.currentTarget)
   }
-
- 
 
 
   return (
     <>
       <Tooltip title="Priority" >
         <IconButton aria-label="priority" onMouseOver={onPriority} >
-          <span className={classes.ballColor} style={{backgroundColor: onpriorityColor}}></span>
+          <span className={classes.ballColor} style={{ backgroundColor: onpriorityColor }}></span>
         </IconButton>
       </Tooltip>
       <Menu
@@ -73,9 +76,9 @@ export default function PriorityTask({color, id}) {
         onClose={handleCloseMenu}
       >
         {
-          colors.map(c => <MenuItem onClick={(e) => handleClose(e, c)}> <span className={classes.ballColor} style={{backgroundColor: c}}>  </span> </MenuItem>)
+          colors.map(c => <MenuItem onClick={(e) => handleClose(e, c)}> <span className={classes.ballColor} style={{ backgroundColor: c }}>  </span> </MenuItem>)
         }
-        
+
       </Menu>
     </>
   )
