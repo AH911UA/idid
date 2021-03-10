@@ -6,6 +6,7 @@ import { BoardContext } from '../../contexts/board-context'
 import deleteBoard from '../../servises/deleteBoard'
 import {UserContext} from '../../contexts/user-context'
 import ProgressMsg from '../../componenst/progress-msg';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -68,7 +69,10 @@ export default function Board({id, title, back}) {
                         title
                     }
                     {
-                        title !== 'new board' ? <DeleteIcon className={classes.deleteBtn} onClick={onDelete} /> : ''
+                        title !== 'new board' ? <Tooltip title="delete" placement="right">
+                                                    <DeleteIcon className={classes.deleteBtn} onClick={onDelete} /> 
+                                                </Tooltip> 
+                                                : ''
                     }
             </Button>
         

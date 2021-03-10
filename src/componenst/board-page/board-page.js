@@ -136,7 +136,7 @@ export default function BoardPage({setpage}) {
             {
                 isSave ? <ProgressMsg alert='save' /> : ''
             }
-            <Container fixed>
+            <Container maxWidth='false'>
                 <Typography component="div"
                     className={classes.root}
                     style={board.back ? {backgroundColor: 'transparent'} : {backgroundColor: '#80CBC4'}}

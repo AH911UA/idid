@@ -30,11 +30,9 @@ const useStyles = makeStyles({
     root: {
         flexGrow: 1,
         maxHeight: '100vh',
-        // background: 'linear-gradient(45deg, #B2DFDB 50%, #DCEDC8 90%)',
         backgroundColor: '#212121',
         border: 0,
         borderRadius: 0,
-        // boxShadow: '0 2px 15px 2px #FAFAFA',
     },
     logo: {
         fontStyle: 'italic',
