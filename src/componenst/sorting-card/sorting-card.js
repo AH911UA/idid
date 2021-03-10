@@ -39,7 +39,7 @@ export default function SortingCard()
     setsorting({
       ...sorting,
       name: event.target.value,
-    });
+    }); 
   };
 
 

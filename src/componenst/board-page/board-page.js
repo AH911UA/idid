@@ -115,8 +115,6 @@ export default function BoardPage({ setpage }) {
             return;
         } 
 
-        console.log("HELLLO ");
-
         setboard({ ...board, title: nameBoard.trim()});
         // saveBoard(user.id, setisSave);
     }
