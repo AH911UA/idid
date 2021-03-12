@@ -1,16 +1,16 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Task from '../task'
+import Task from './task'
 import ViewAgendaIcon from '@material-ui/icons/ViewAgenda';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Button from '@material-ui/core/Button';
-import { BoardContext } from '../../contexts/board-context'
+import { BoardContext } from '../../../contexts/board-context'
 import { useContext, useState, useCallback } from 'react';
 import * as randId from 'generate-unique-id';
-import sendBoard from '../../servises/sendBoard';
-import { UserContext } from '../../contexts/user-context';
-import { getBoard } from '../../servises/getBoards';
+import sendBoard from '../../../servises/sendBoard';
+import { UserContext } from '../../../contexts/user-context';
+import { getBoard } from '../../../servises/getBoards';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 //

@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { useContext, useState, useEffect } from 'react';
-import { BoardContext } from '../../../contexts/board-context';
+import { BoardContext } from '../../../../../contexts/board-context';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import IconButton from '@material-ui/core/IconButton';
 import React from 'react';

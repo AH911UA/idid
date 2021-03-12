@@ -1,0 +1,53 @@
+.ionicon1 {
+    z-index: 200;
+    animation-duration: 10s;
+    animation-name: slidein1;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    transform-origin: 260px 270px;
+}
+
+@keyframes slidein1 {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.ionicon2 {
+    z-index: 1;
+    animation-duration: 10s;
+    animation-name: slidein2;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    transform-origin: 260px 270px;
+}
+
+@keyframes slidein2 {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+.ionicon3 {
+    z-index: 1;
+    animation-duration: 10s;
+    animation-name: slidein3;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    transform-origin: 260px 270px;
+}
+
+@keyframes slidein3 {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}

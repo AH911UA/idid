@@ -5,13 +5,13 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { BoardContext } from '../../contexts/board-context';
-import { UserContext } from '../../contexts/user-context'; 
+import { BoardContext } from '../../../../contexts/board-context';
+import { UserContext } from '../../../../contexts/user-context'; 
 
 import TextField from '@material-ui/core/TextField';
 import DateFnsUtils from '@date-io/date-fns';
 import PriorityTask from './priority-task'
-import sendBoard from '../../servises/sendBoard';
+import sendBoard from '../../../../servises/sendBoard';
 //
 import { useDrag } from 'react-dnd';
 //

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Redirect, Route } from 'react-router-dom';
-    import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -19,9 +19,9 @@ import { UserContext } from '../../contexts/user-context'
 import getImage from '../../servises/getImage'
 import { BoardContext } from '../../contexts/board-context';
 import BoardTreeView from './board-tree-item';
-import ImageAvatars, {loadAva} from './avatar';
+import ImageAvatars, { loadAva } from './avatar';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import {sendAvatar} from '../../servises/avatar-db';
+import { sendAvatar } from '../../servises/avatar-db';
 
 import Calendar from './calendar';
 
@@ -67,7 +67,7 @@ const useStyles = makeStyles({
         },
         '& .MuiTouchRipple-root:hover':
         {
-            backgroundColor: 'red'
+            backgroundColor: '#E65100'
         },
         '& svg, & i': {
             color: '#424242',
@@ -92,7 +92,7 @@ const useStyles = makeStyles({
 
 export default function Menu() {
     const classes = useStyles();
-    const [menu, setmenu] = React.useState(false);  
+    const [menu, setmenu] = React.useState(false);
     const [value, setValue] = React.useState(0);
 
     const { setisLoginUser } = useContext(UserContext);
@@ -152,7 +152,7 @@ export default function Menu() {
                 >
                     <List >
                         <ListItem button key={'home'} >
-                            <Link to='/' style={{display: 'flex', alignItems: 'center'}}>
+                            <Link to='/' style={{ display: 'flex', alignItems: 'center' }}>
                                 <ListItemIcon>  <i class="material-icons">home</i> </ListItemIcon>
                                 <ListItemText primary='Home' />
                             </Link>
@@ -181,15 +181,15 @@ export default function Menu() {
                                     sendAvatar(user, url, () => setuser({ ...user, ava: url }))
                                 })}
                             />
-                            <label htmlFor="raised-button-file" style={{display: 'flex', alignItems: 'center' }}>
+                            <label htmlFor="raised-button-file" style={{ display: 'flex', alignItems: 'center' }}>
                                 <ListItemIcon> <AccountBoxIcon /> </ListItemIcon>
-                                <ListItemText primary='Load avatar'/>
+                                <ListItemText primary='Load avatar' />
                             </label>
 
                         </ListItem>
 
                         <ListItem>
-                            <Calendar/>
+                            <Calendar />
                         </ListItem>
                     </List>
                 </div>

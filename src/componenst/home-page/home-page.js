@@ -16,7 +16,8 @@ import { sendBoards } from '../../servises/sendBoard';
 import Notes from './notes'
 import { NotesContext } from '../../contexts/notes-context';
 import getNotes from '../../servises/getNotes';
-
+import Footer from './footer'
+import Hidden from '@material-ui/core/Hidden';
 import Grid from '@material-ui/core/Grid';
 
 import { BoardContext } from '../../contexts/board-context'
@@ -68,11 +69,13 @@ export default function HomePage({ setpage }) {
             <CssBaseline />
             <Container maxWidth="false" className={classes.container}>
                 <Grid container>
-                    <Grid item md={3}>
-                        <Typography component="div" className={classes.leftField}>
-                            <Notes />
-                        </Typography>
-                    </Grid>
+                    <Hidden only={['sm', 'md']}>
+                        <Grid item md={3}>
+                            <Typography component="div" className={classes.leftField}>
+                                <Notes />
+                            </Typography>
+                        </Grid>
+                    </Hidden>
 
                     <Grid item md={9}>
                         <Typography component="div" className={classes.root}>
@@ -91,6 +94,7 @@ export default function HomePage({ setpage }) {
                     </Grid>
                 </Grid>
             </Container>
+            <Footer />
         </>
 
     );

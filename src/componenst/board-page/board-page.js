@@ -13,7 +13,7 @@ import { UserContext } from '../../contexts/user-context';
 import ProgressMsg from '../../componenst/progress-msg';
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import TargetCard from '../card';
+import TargetCard from './card';
 import SortingCard from '../sorting-card';
 import Settings from './settings'
 
